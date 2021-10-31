@@ -66,7 +66,7 @@ func ExtractScript(doc *tycho.Node, n *tycho.Node) {
 						id = fmt.Sprintf("'%s'", id)
 					}
 
-					if strings.HasPrefix(attr.Key, "client:") {
+					if strings.HasPrefix(attr.Key, "client:") && attr.Key != "client:only" {
 						doc.HydratedComponents = append(doc.HydratedComponents, n)
 						pathAttr := tycho.Attribute{
 							Key:  "client:component-path",

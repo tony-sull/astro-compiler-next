@@ -302,6 +302,7 @@ func render1(p *printer, n *Node, opts RenderOptions) {
 	}
 
 	isComponent := (n.Component || n.CustomElement) && n.Data != "Fragment"
+	isClientOnly := isComponent && transform.HasAttr(n, "client:only")
 	isSlot := n.DataAtom == atom.Slot
 
 	p.addSourceMapping(n.Loc[0])
@@ -319,6 +320,8 @@ func render1(p *printer, n *Node, opts RenderOptions) {
 	} else if !isSlot {
 		if n.CustomElement {
 			p.print(fmt.Sprintf("'%s'", n.Data))
+		} else if isClientOnly {
+			p.print("null")
 		} else {
 			p.print(n.Data)
 		}
